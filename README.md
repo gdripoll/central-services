@@ -183,10 +183,4 @@ your-browser /root/path/of/project/docs/index.html
 ```
 
 
-## Reglas de negocio
-
-### Formatos de mail
-Si un formato no existe para una zona, se marca un error en LOG y se descarta (Diana - 04-10-17).
-
-
 -----

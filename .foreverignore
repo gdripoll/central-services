@@ -1,0 +1,4 @@
+# logs ignore
+log/*
+# docs ignore
+docs/*
