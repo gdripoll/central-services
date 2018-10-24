@@ -1,3 +1,10 @@
+.vscode
+.nyc_output
+node_modules/*
+log/*
+package-lock.json
+
+
 # Logs
 logs
 *.log

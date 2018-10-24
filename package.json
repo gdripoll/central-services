@@ -1,9 +1,18 @@
 {
   "name": "central-services",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "tddwatch": "NODE_ENV=DEV nyc mocha ./tests --recursive --watch",
+    "tdd": "NODE_ENV=DEV nyc mocha ./tests --recursive",
+    "docs": "jsdoc --configure ./jsdoc.config.json",
+    "dev": "NODE_ENV=DEV forever --watch ./bin/www",
+    "test": "NODE_ENV=TEST forever ./bin/www",
+    "start": "node ./bin/www",
+    "nstart": "NODE_ENV=PROD forever ./bin/www",
+    "quro": "NODE_ENV=QURO forever ./bin/www",
+    "east": "NODE_ENV=EAST forever ./bin/www",
+    "west": "NODE_ENV=WEST forever ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -12,6 +21,20 @@
     "forever": "^0.15.3",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
-    "pug": "2.0.0-beta11"
+    "mysql": "^2.16.0",
+    "node-config-manager": "^2.0.0",
+    "nodemailer": "^4.6.8",
+    "pug": "2.0.0-beta11",
+    "request": "^2.88.0",
+    "requestretry": "^3.0.2",
+    "sleep": "^5.2.3",
+    "sqlite3": "^4.0.3",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "jsdoc": "^3.5.5",
+    "mocha": "^3.5.3",
+    "nyc": "^12.0.2"
   }
 }
