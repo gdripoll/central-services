@@ -1,3 +1,10 @@
 {
-	"name":"Auth"
+	"name": "Auth",
+	"auth": {
+		"default-access": "deny",
+		"allow": [
+			"users.login",
+			"users.logout"
+		]
+	}
 }
