@@ -26,6 +26,7 @@ class Auth {
         this.config=JSON.parse(fs.readFileSync(`${path}/config.json`,'utf8'))
 
         // console.log(logFunc,this.config)
+        return this
     }
 
     /**

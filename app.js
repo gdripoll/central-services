@@ -40,8 +40,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 console.log("# + Middleware")
-var middleware = require('./src/middleware/auth')
-middleware.setup('./config/auth')
+var middleware = require('./src/middleware/auth').setup('./config/auth')
+app.use((req, res, next) => {
+	middleware.go(req, res, next);
+})
 
 //
 // ROUTES
@@ -51,7 +53,8 @@ items = fs.readdirSync('./routes')
 items.forEach(element => {
 	var name = element.split('.')[0]
 	console.log(`\t/ aquiring`, ((name != 'index') ? `/${name}` : '/'), `[from ./routes/${name}]`);
-	app.use((name != 'index') ? `/${name}` : '/', middleware.go, require(`./routes/${name}`))
+	app.use((name != 'index') ? `/${name}` : '/', require(`./routes/${name}`))
+	// app.use((name != 'index') ? `/${name}` : '/', middleware.go, require(`./routes/${name}`))
 });
 
 //
