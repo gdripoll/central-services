@@ -1,15 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var cors = require(‘cors’)
-var logger = require('morgan');
+//
+// Central Services
+//
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-// users.use(cors());
-
+var createError = require('http-errors')
+var express = require('express')
+var path = require('path')
+var cookieParser = require('cookie-parser')
+var cors = require('cors')
+var logger = require('morgan')
+var fs = require('fs')
 
 var app = express();
 
@@ -23,10 +22,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//
+// ROUTES
+//
+items = fs.readdirSync('./routes')
+items.forEach(element => {
+	var name = element.split('.')[0]
+	console.log(`ROUTE:aquiring`, ((name != 'index') ? `/${name}` : '/'), `[from ./routes/${name}]`);
+	app.use((name != 'index') ? `/${name}` : '/', require(`./routes/${name}`))
+});
+console.log('ROUTE:All routes initialized.')
 
+//
 // catch 404 and forward to error handler
+//
 app.use(function(req, res, next) {
   next(createError(404));
 });
