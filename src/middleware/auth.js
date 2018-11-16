@@ -37,28 +37,26 @@ class Auth {
      */
     go(req, res, next) {
         var logFunc = `${this.logHead}go}`
+        console.log('\n\n# >-----');
         console.log(logFunc, `url [${req.originalUrl}]`);
 
-        console.log(logFunc, `session=`, req.session)
-        if (req.session.logged) {
-            // algo
-        } else {
-            req.session.logged = true
-            req.session.views = 0
-        }
+        if (!req.session.views) req.session.views = 0
         req.session.views++
-        console.log(logFunc, `session=`, req.session)
-
-
-
-
-
 
         if (this.checkUrl(req.originalUrl)) {
             next()
         } else {
-            res.end('FALLO! no autorizado')
+
+            if (req.session.logged) {
+                next()
+            } else {
+                console.log('### Redirecting...');
+                res.redirect('/users/login')
+                console.log('### Redirected.');
+            }
+
         }
+        console.log(logFunc, `session=`, req.session)
         console.log('# <-----');
     }
 
@@ -140,6 +138,24 @@ class Auth {
         return false;
     }
 
+    login(req, res, user, pass) {
+        var logFunc = `${this.logHead}login}`
+        req.session.logged=true
+        req.session.auth={
+            user:user,
+            pass:pass
+        }
+        console.log(req.session.auth)
+        return true
+    }
+
+    logout(req,res){
+        var logFunc = `${this.logHead}logout}`
+        req.session.logged=false
+        req.session.auth=null
+        console.log(req.session.auth)
+        return true
+    }
 }
 
 

@@ -35,8 +35,10 @@ app.set('view engine', 'pug');
 console.log("# + Modules setup")
 app.use(session({
 	secret: 'ahivalabalaatajala',
-	cookie: { }
-  }))
+	resave: false,
+	saveUninitialized: true,
+	cookie: {}
+}))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({

@@ -1,6 +1,18 @@
 extends ../page_external
 
-block content
-  h1= title
-  p #{subtitle}
-  hr
+block client
+	.container
+		.row
+			.col-sm-9.col-md-7.col-lg-5.mx-auto
+				.card.card-signin.my-5
+					.card-body
+						h5.card-title.text-center Sign In
+						form.form-signin(method="POST")
+							.form-label-group
+								input.form-control(type="text", name="user", id="inputEmail", placeholder="Usuario", required="true", autofocus="true")
+								label(for="inputEmail") 
+							.form-label-group
+								input.form-control(type="password", name="pass", id="inputPassword", placeholder="Clave", required="true")
+								label(for="inputPassword") 
+							hr.my-4
+							button.btn.btn-lg.btn-primary.btn-block.text-uppercase(type="submit") Login
