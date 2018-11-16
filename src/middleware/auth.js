@@ -38,10 +38,26 @@ class Auth {
     go(req, res, next) {
         var logFunc = `${this.logHead}go}`
         console.log(logFunc, `url [${req.originalUrl}]`);
+
+        console.log(logFunc, `session=`, req.session)
+        if (req.session.logged) {
+            // algo
+        } else {
+            req.session.logged = true
+            req.session.views = 0
+        }
+        req.session.views++
+        console.log(logFunc, `session=`, req.session)
+
+
+
+
+
+
         if (this.checkUrl(req.originalUrl)) {
             next()
         } else {
-            res.send('FALLO! falta login')
+            res.end('FALLO! no autorizado')
         }
         console.log('# <-----');
     }

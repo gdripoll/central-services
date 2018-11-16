@@ -11,10 +11,12 @@ console.log("#")
 //
 console.log("# + Requires")
 var createError = require('http-errors')
+
 var express = require('express')
+var session = require('express-session')
+var cors = require('cors')
 var path = require('path')
 var cookieParser = require('cookie-parser')
-var cors = require('cors')
 var logger = require('morgan')
 var fs = require('fs')
 
@@ -31,6 +33,10 @@ app.set('view engine', 'pug');
 // Modules
 //
 console.log("# + Modules setup")
+app.use(session({
+	secret: 'ahivalabalaatajala',
+	cookie: { }
+  }))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
@@ -39,6 +45,9 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//
+// Middleware
+//
 console.log("# + Middleware")
 var middleware = require('./src/middleware/auth').setup('./config/auth')
 app.use((req, res, next) => {
