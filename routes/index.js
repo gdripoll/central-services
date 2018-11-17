@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', {
-    title: 'CS',
-    subtitle:'Central Services'
-  });
+router.get('/', function(req, res, next) {
+    res.render('home', {
+        title: '',
+        subtitle: ''
+    });
 });
 
 module.exports = router;

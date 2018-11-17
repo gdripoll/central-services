@@ -43,19 +43,19 @@ class Auth {
         if (!req.session.views) req.session.views = 0
         req.session.views++
 
-        if (this.checkUrl(req.originalUrl)) {
-            next()
-        } else {
-
-            if (req.session.logged) {
+            if (this.checkUrl(req.originalUrl)) {
                 next()
             } else {
-                console.log('### Redirecting...');
-                res.redirect('/users/login')
-                console.log('### Redirected.');
-            }
 
-        }
+                if (req.session.logged) {
+                    next()
+                } else {
+                    console.log('### Redirecting...');
+                    res.redirect('/users/login')
+                    console.log('### Redirected.');
+                }
+
+            }
         console.log(logFunc, `session=`, req.session)
         console.log('# <-----');
     }
@@ -63,12 +63,12 @@ class Auth {
     checkUrl(url) {
         try {
             var logFunc = `${this.logHead}checkUrl}`
-            // CHECK TOKEN
+                // CHECK TOKEN
             var data = this.config['auth'];
             var segments = url.split('/')
             segments.shift() // no el primero
-            //
-            // ACCESS Check
+                //
+                // ACCESS Check
             console.log(logFunc, `url=[${url}] segments=[${segments}]`)
             var segment_tokens = this.buildBubbleTokens(segments);
             console.log(logFunc, 'segments =', segment_tokens)
@@ -140,20 +140,27 @@ class Auth {
 
     login(req, res, user, pass) {
         var logFunc = `${this.logHead}login}`
-        req.session.logged=true
-        req.session.auth={
-            user:user,
-            pass:pass
+
+        var users = JSON.parse(fs.readFileSync(`${this.config_path}/users.json`, 'utf8'))
+        if (users[user]) {
+            if (users[user] == pass) {
+                req.session.logged = true
+                req.session.auth = {
+                    user: user,
+                    pass: pass
+                }
+                console.log('auth=', req.session.auth)
+                return true
+            }
         }
-        console.log(req.session.auth)
-        return true
+        return false
     }
 
-    logout(req,res){
+    logout(req, res) {
         var logFunc = `${this.logHead}logout}`
-        req.session.logged=false
-        req.session.auth=null
-        console.log(req.session.auth)
+        req.session.logged = false
+        req.session.auth = null
+        console.log('auth=', req.session.auth)
         return true
     }
 }

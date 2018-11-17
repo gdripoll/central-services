@@ -1,6 +1,14 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+	.container
+		div
+			p
+		.row
+			.col-5
+				.jumbotron
+					h1.display-4= error.status
+					p.lead= message
+					pre #{error.stack}
+					hr.my-4
+					a.btn.btn-primary.btn-lg(href="/", role="button") Home
